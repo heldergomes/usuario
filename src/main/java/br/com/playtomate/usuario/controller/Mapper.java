@@ -13,7 +13,7 @@ public class Mapper {
         this.serviceUsuario = serviceUsuario;
     }
 
-    public Usuario toPessoa(PessoaDTO dto){
+    public Usuario toPessoa(UsuarioDTO dto){
         Usuario usuario = buildPessoa();
         usuario.buildPessoa(dto.getLogin(),
                                 dto.getEmail(),
@@ -29,7 +29,7 @@ public class Mapper {
         return usuario;
     }
 
-    public void toJuridica(Usuario usuario, PessoaDTO dto){
+    public void toJuridica(Usuario usuario, UsuarioDTO dto){
         usuario.buildPessoaJuridica(dto.getNomeEmpresa());
     }
 
@@ -39,8 +39,8 @@ public class Mapper {
         return usuario;
     }
 
-    public PessoaDTO toDto(Usuario usuario) {
-        PessoaDTO dto = new PessoaDTO();
+    public UsuarioDTO toDto(Usuario usuario) {
+        UsuarioDTO dto = new UsuarioDTO();
         dto.setTipoPessoa(TipoPessoa.converterCodigoTipoPessoa(usuario.getTipoPessoa()));
         dto.setLogin(usuario.getLogin());
         dto.setEmail(usuario.getEmail());

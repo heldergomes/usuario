@@ -18,7 +18,7 @@ public enum TipoPessoa {
             if(tipoPessoa == tipo.getTipoPessoa())
                 return tipo;
         }
-        throw new RuntimeException();
+        throw new TipoPessoaException("codigo tipo pessoa invalido: " + tipoPessoa);
     }
 
     public static int converterCodigoTipoPessoa(TipoPessoa tipoPessoa) {
@@ -26,6 +26,6 @@ public enum TipoPessoa {
             if(tipoPessoa == tipo)
                 return tipo.getTipoPessoa();
         }
-        throw new RuntimeException();
+        throw new TipoPessoaException("Enum tipo pessoa invalido: " + tipoPessoa);
     }
 }

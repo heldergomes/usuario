@@ -1,6 +1,8 @@
 package br.com.playtomate.usuario.database;
 
 import br.com.playtomate.usuario.domain.Usuario;
+import com.mongodb.MongoClientException;
+import com.mongodb.MongoException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -23,11 +25,15 @@ public class ServiceUsuario {
     }
 
     public Usuario consultar(String id) {
-        Optional<Usuario> usuarioOptional = repository.findById(id);
-        if(usuarioOptional.isPresent()) {
-            return usuarioOptional.get();
-        }else {
-            throw new RuntimeException();
+        try {
+            Optional<Usuario> usuarioOptional = repository.findById(id);
+            if (usuarioOptional.isPresent()) {
+                return usuarioOptional.get();
+            } else {
+                throw new UsuarioInexistenteException("Não foi encontrado usuario para o id: " + id);
+            }
+        }catch (MongoException ex){
+            throw ex;
         }
     }
 }
