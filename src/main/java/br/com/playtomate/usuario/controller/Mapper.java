@@ -1,12 +1,15 @@
 package br.com.playtomate.usuario.controller;
 
 import br.com.playtomate.usuario.database.ServiceUsuario;
-import br.com.playtomate.usuario.domain.TipoPessoa;
 import br.com.playtomate.usuario.domain.Usuario;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 public class Mapper {
+
+    Logger logger = LoggerFactory.getLogger("Mapper");
 
     private ServiceUsuario serviceUsuario;
     public Mapper(ServiceUsuario serviceUsuario){
@@ -14,45 +17,22 @@ public class Mapper {
     }
 
     public Usuario toPessoa(UsuarioDTO dto){
-        Usuario usuario = buildPessoa();
-        usuario.buildPessoa(dto.getLogin(),
-                                dto.getEmail(),
-                                dto.getSenha(),
-                                dto.getNome(),
-                                dto.getNumeroTelefone(),
-                                dto.getTipoPessoa());
-
-        usuario.buildLocalidade(dto.getEndereco(),
-                                    dto.getCidade(),
-                                    dto.getEstado(),
-                                    dto.getCodigoPostal());
+        Usuario usuario = Usuario.builder()
+                            .login(dto.getLogin())
+                            .email(dto.getEmail())
+                            .senha(dto.getSenha())
+                            .nome(dto.getNome())
+                            .telefone(dto.getTelefone())
+                            .serviceUsuario(serviceUsuario)
+                            .build();
+        logger.info("Usuario mapeado: " + usuario.toString());
         return usuario;
     }
 
-    public void toJuridica(Usuario usuario, UsuarioDTO dto){
-        usuario.buildPessoaJuridica(dto.getNomeEmpresa());
-    }
-
     public Usuario buildPessoa(){
-        Usuario usuario = new Usuario();
+        Usuario usuario = Usuario.builder().build();
         usuario.setServiceUsuario(serviceUsuario);
         return usuario;
     }
 
-    public UsuarioDTO toDto(Usuario usuario) {
-        UsuarioDTO dto = new UsuarioDTO();
-        dto.setTipoPessoa(TipoPessoa.converterCodigoTipoPessoa(usuario.getTipoPessoa()));
-        dto.setLogin(usuario.getLogin());
-        dto.setEmail(usuario.getEmail());
-        dto.setSenha(usuario.getSenha());
-        dto.setNome(usuario.getNome());
-        dto.setNumeroTelefone(usuario.getNumeroTelefone());
-        dto.setEndereco(usuario.getLocalidade().getEndereco());
-        dto.setCidade(usuario.getLocalidade().getCidade());
-        dto.setEstado(usuario.getLocalidade().getEstado());
-        dto.setCodigoPostal(usuario.getLocalidade().getCodigoPostal());
-        if(usuario.getTipoPessoa() == TipoPessoa.JURIDICA)
-            dto.setNomeEmpresa(usuario.getPessoaJuridica().getNomeEmpresa());
-        return dto;
-    }
 }
