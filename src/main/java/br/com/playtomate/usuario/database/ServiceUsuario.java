@@ -1,20 +1,20 @@
 package br.com.playtomate.usuario.database;
 
-import br.com.playtomate.usuario.domain.Usuario;
+import br.com.playtomate.usuario.domain.usuario.Usuario;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class ServiceUsuario {
 
     Logger logger = LoggerFactory.getLogger("ServiceUsuario");
 
-    private RepositoryUsuario repository;
-    public ServiceUsuario(RepositoryUsuario repository){
-        this.repository = repository;
-    }
+    @Autowired
+    RepositoryUsuario repository;
 
     public void salvar(Usuario usuario) {
         try {
@@ -29,5 +29,9 @@ public class ServiceUsuario {
     public void deletar(String id){
         repository.findById(id);
         repository.deleteById(id);
+    }
+
+    public Usuario buscarPorLogin(String login){
+         return repository.findByLogin(login);
     }
 }

@@ -46,8 +46,9 @@
 
 		<!-- DATABASE -->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-mongodb</artifactId>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-mongodb</artifactId>
+			<version>2.2.1.RELEASE</version>
 		</dependency>
 
 		<!-- LOGBACK -->
