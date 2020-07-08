@@ -3,9 +3,6 @@ package br.com.playtomate.usuario.domain.usuario;
 import br.com.playtomate.usuario.database.ServiceUsuario;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -16,7 +13,6 @@ import java.util.stream.Collectors;
 
 @Builder
 @Getter
-@Setter
 @Document
 public class Usuario {
 
@@ -32,7 +28,7 @@ public class Usuario {
     private ServiceUsuario serviceUsuario;
 
     public String cadastroPessoa(){
-        setId(String.valueOf(UUID.randomUUID()));
+        id = String.valueOf(UUID.randomUUID());
         serviceUsuario.salvar(this);
         return id;
     }
@@ -56,5 +52,9 @@ public class Usuario {
                 ", telefone=" + telefone +
                 ", perfil=" + perfils +
                 '}';
+    }
+
+    public Usuario buscarUsuario(String id) {
+        return serviceUsuario.buscarPorId(id);
     }
 }

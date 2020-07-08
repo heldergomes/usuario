@@ -1,5 +1,7 @@
 package br.com.playtomate.usuario.controller.usuario;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,8 +9,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+@Builder
 @Getter
-@Setter
 public class UsuarioDTO {
 
     @NotNull(message = "O campo login não pode ser nulo")
@@ -19,6 +21,7 @@ public class UsuarioDTO {
     private String email;
     @NotNull(message = "O campo senha não pode ser nulo")
     @NotEmpty(message = "O campo senha não pode estar vazio")
+    @JsonIgnore
     private String senha;
     @NotNull(message = "O campo nome não pode ser nulo")
     @NotEmpty(message = "O campo nome não pode estar vazio")

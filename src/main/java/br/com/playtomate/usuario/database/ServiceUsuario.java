@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
+import javax.management.openmbean.InvalidKeyException;
+
 
 @Service
 public class ServiceUsuario {
@@ -33,5 +35,9 @@ public class ServiceUsuario {
 
     public Usuario buscarPorLogin(String login){
          return repository.findByLogin(login);
+    }
+
+    public Usuario buscarPorId(String id) {
+        return repository.findById(id).orElseThrow(InvalidKeyException::new);
     }
 }

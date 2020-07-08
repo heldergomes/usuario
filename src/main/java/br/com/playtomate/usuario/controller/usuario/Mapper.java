@@ -32,7 +32,6 @@ public class Mapper {
                 .serviceUsuario(serviceUsuario)
                 .build();
 
-        usuario.setPerfils(new HashSet<Integer>());
         usuario.getPerfils().add(Perfil.CLIENTE.getCodigo());
         usuario.getPerfils().add(Perfil.ADMIN.getCodigo());
         logger.info("Usuario mapeado: " + usuario.toString());
@@ -40,8 +39,18 @@ public class Mapper {
     }
 
     public Usuario buildPessoa(){
-        Usuario usuario = Usuario.builder().build();
+        Usuario usuario = Usuario.builder()
+                .serviceUsuario(serviceUsuario)
+                .build();
         return usuario;
     }
 
+    public UsuarioDTO toDto(Usuario usuario) {
+        return UsuarioDTO.builder()
+                .login(usuario.getLogin())
+                .email(usuario.getEmail())
+                .nome(usuario.getNome())
+                .telefone(usuario.getTelefone())
+                .build();
+    }
 }

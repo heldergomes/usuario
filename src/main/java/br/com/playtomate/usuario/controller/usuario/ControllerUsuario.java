@@ -36,4 +36,11 @@ public class ControllerUsuario {
         return ResponseEntity.noContent().build();
     }
 
+    @RequestMapping(value = "/usuario/{id}", method = RequestMethod.GET)
+    public ResponseEntity<UsuarioDTO> buscarUsuario(@PathVariable String id){
+        Usuario usuario = mapper.buildPessoa();
+        usuario = usuario.buscarUsuario(id);
+        UsuarioDTO dto = mapper.toDto(usuario);
+        return ResponseEntity.ok(dto);
+    }
 }
