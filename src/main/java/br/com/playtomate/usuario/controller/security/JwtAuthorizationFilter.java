@@ -33,7 +33,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         String authorization = request.getHeader("Authorization");
 
         if (authorization != null && authorization.startsWith("Bearer ")) {
-            UsernamePasswordAuthenticationToken auth = getAuthentication(request, authorization.substring(7));
+            UsernamePasswordAuthenticationToken auth = getAuthentication(authorization.substring(7));
             if (auth != null){
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
@@ -41,7 +41,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         chain.doFilter(request, response);
     }
 
-    private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request, String token) {
+    private UsernamePasswordAuthenticationToken getAuthentication(String token) {
         if (jwtUtil.tokenValido(token)){
             String login = jwtUtil.getLogin(token);
             UserDetails usuarioSecurity = usuarioServiceSecurity.loadUserByUsername(login);
