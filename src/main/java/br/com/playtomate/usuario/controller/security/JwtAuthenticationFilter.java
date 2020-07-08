@@ -53,7 +53,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             Authentication authResult) throws IOException, ServletException {
         String login = ((UsuarioSecurity) authResult.getPrincipal()).getUsername();
         String token = jwtUtil.generateToken(login);
+        String id = ((UsuarioSecurity) authResult.getPrincipal()).getId();
         response.addHeader("Authorization", "Bearer " + token);
+        response.setContentType("application/json");
+        response.getWriter().append("{\"id_usuario\": \"" + id +"\"}");
     }
 
     private class JwtAuthenticationFailureHandler implements AuthenticationFailureHandler {

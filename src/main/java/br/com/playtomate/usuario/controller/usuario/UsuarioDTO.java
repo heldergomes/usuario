@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,5 +25,4 @@ public class UsuarioDTO {
     private String nome;
     @NotNull(message = "O campo numeroTelefone não pode ser nulo")
     private int telefone;
-
 }

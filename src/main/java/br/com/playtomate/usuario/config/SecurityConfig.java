@@ -1,6 +1,7 @@
 package br.com.playtomate.usuario.config;
 
 import br.com.playtomate.usuario.controller.security.JwtAuthenticationFilter;
+import br.com.playtomate.usuario.controller.security.JwtAuthorizationFilter;
 import br.com.playtomate.usuario.domain.security.JwtUtil;
 import br.com.playtomate.usuario.domain.security.UsuarioServiceSecurity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //Chama configuração do cors definida nessa configuração
         //Desabilita validação de ataque de sessão CSRF
         http.cors().and().csrf().disable();
-        // authoriza o acesso no end-point declarado no PUBLIC_MATCHERS
-        // para os demais end-points deve ser validado e authorizado
         http.addFilter(new JwtAuthenticationFilter(authenticationManager(), jwtUtil));
+        http.addFilter(new JwtAuthorizationFilter(authenticationManager(), jwtUtil, usuarioServiceSecurity));
         http.authorizeRequests()
                 .antMatchers(PUBLIC_MATCHERS).permitAll()
                 .anyRequest().authenticated();
