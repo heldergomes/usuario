@@ -1,6 +1,5 @@
 package br.com.playtomate.usuario.controller.security;
 
-import br.com.playtomate.usuario.controller.security.CredenciaisDTO;
 import br.com.playtomate.usuario.domain.security.JwtUtil;
 import br.com.playtomate.usuario.domain.security.UsuarioSecurity;
 import com.fasterxml.jackson.databind.ObjectMapper;

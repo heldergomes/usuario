@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+
 
 @Service
 public class Mapper {
@@ -29,11 +30,12 @@ public class Mapper {
                 .senha(crypt.encode(dto.getSenha()))
                 .nome(dto.getNome())
                 .telefone(dto.getTelefone())
+                .perfils(new ArrayList<>())
                 .serviceUsuario(serviceUsuario)
                 .build();
+        dto.getPerfils().stream()
+                .forEach(perfil -> usuario.getPerfils().add(Perfil.toEnum(perfil).getCodigo()));
 
-        usuario.getPerfils().add(Perfil.CLIENTE.getCodigo());
-        usuario.getPerfils().add(Perfil.ADMIN.getCodigo());
         logger.info("Usuario mapeado: " + usuario.toString());
         return usuario;
     }

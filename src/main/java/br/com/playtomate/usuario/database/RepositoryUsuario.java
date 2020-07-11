@@ -5,10 +5,12 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
-public interface RepositoryUsuario extends MongoRepository<Usuario, String> {
+public interface RepositoryUsuario extends MongoRepository<UsuarioModel, String> {
 
     @Query("{ 'login' : '?0' }")
-    Usuario findByLogin(String login);
+    Optional<UsuarioModel> findByLogin(String login);
 
 }
