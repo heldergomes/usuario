@@ -37,6 +37,11 @@ public class Usuario {
     }
 
     public void deletarPessoa(String id){
+        UsuarioSecurity usuarioSecurity = Autenticador.autenticarUsuario();
+        if (usuarioSecurity == null || !usuarioSecurity.hasRole(Perfil.ADMIN) && !id.equals(usuarioSecurity.getId())) {
+            logger.error("usuario negado devido falta de acesso !");
+            throw new AutorizacaoException("Acesso Negado !");
+        }
         serviceUsuario.deletar(id);
     }
 
