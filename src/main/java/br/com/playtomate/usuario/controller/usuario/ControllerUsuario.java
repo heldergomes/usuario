@@ -3,11 +3,13 @@ import br.com.playtomate.usuario.domain.usuario.Usuario;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 public class ControllerUsuario {
@@ -40,8 +42,21 @@ public class ControllerUsuario {
     @RequestMapping(value = "/usuario/{id}", method = RequestMethod.GET)
     public ResponseEntity<UsuarioDTO> buscarUsuario(@PathVariable String id){
         Usuario usuario = mapper.buildPessoa();
+        logger.info("usuario DTO mapeado");
         usuario = usuario.buscarUsuario(id);
+        logger.info("usuario consultado com sucesso !");
         UsuarioDTO dto = mapper.toDto(usuario);
+        return ResponseEntity.ok(dto);
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @RequestMapping(value = "/usuario", method = RequestMethod.GET)
+    public ResponseEntity<List<UsuarioDTO>> buscarUsuarios(){
+        Usuario usuario = mapper.buildPessoa();
+        logger.info("usuario DTO mapeado");
+        List<Usuario> usuarios = usuario.buscarTodosUsuarios();
+        logger.info("busca de todos os usuarios realizada com sucesso !");
+        List<UsuarioDTO>  dto = mapper.toDto(usuarios);
         return ResponseEntity.ok(dto);
     }
 }

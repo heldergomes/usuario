@@ -5,8 +5,8 @@ import br.com.playtomate.usuario.domain.security.Autenticador;
 import br.com.playtomate.usuario.domain.security.UsuarioSecurity;
 import lombok.Builder;
 import lombok.Getter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Set;
@@ -25,11 +25,14 @@ public class Usuario {
     private int telefone;
     private List<Integer> perfils;
 
+    private Logger logger;
     private ServiceUsuario serviceUsuario;
 
     public String cadastroPessoa(){
         id = String.valueOf(UUID.randomUUID());
+        logger.info("Geração do usuario gerada com sucesso !");
         serviceUsuario.salvar(this);
+        logger.info("usuario salvo com sucesso !");
         return id;
     }
 
@@ -56,8 +59,15 @@ public class Usuario {
 
     public Usuario buscarUsuario(String id) {
         UsuarioSecurity usuarioSecurity = Autenticador.autenticarUsuario();
-        if (usuarioSecurity == null || !usuarioSecurity.hasRole(Perfil.ADMIN) && !id.equals(usuarioSecurity.getId()))
+        if (usuarioSecurity == null || !usuarioSecurity.hasRole(Perfil.ADMIN) && !id.equals(usuarioSecurity.getId())) {
+            logger.error("usuario negado devido falta de acesso !");
             throw new AutorizacaoException("Acesso Negado !");
+        }
+        logger.info("usuario com acesso permitido !");
         return serviceUsuario.buscarPorId(id);
+    }
+
+    public List<Usuario> buscarTodosUsuarios() {
+        return serviceUsuario.buscarTodos();
     }
 }

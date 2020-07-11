@@ -9,6 +9,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -32,6 +34,7 @@ public class Mapper {
                 .telefone(dto.getTelefone())
                 .perfils(new ArrayList<>())
                 .serviceUsuario(serviceUsuario)
+                .logger(LoggerFactory.getLogger("Usuario"))
                 .build();
         dto.getPerfils().stream()
                 .forEach(perfil -> usuario.getPerfils().add(Perfil.toEnum(perfil).getCodigo()));
@@ -43,16 +46,34 @@ public class Mapper {
     public Usuario buildPessoa(){
         Usuario usuario = Usuario.builder()
                 .serviceUsuario(serviceUsuario)
+                .logger(LoggerFactory.getLogger("Usuario"))
                 .build();
+        logger.info("Usuario mapeado: " + usuario.toString());
         return usuario;
     }
 
     public UsuarioDTO toDto(Usuario usuario) {
-        return UsuarioDTO.builder()
+        UsuarioDTO dto = UsuarioDTO.builder()
                 .login(usuario.getLogin())
                 .email(usuario.getEmail())
                 .nome(usuario.getNome())
                 .telefone(usuario.getTelefone())
                 .build();
+        logger.info("Usuario DTO mapeado: " + dto.toString());
+        return dto;
+    }
+
+    public List<UsuarioDTO> toDto(List<Usuario> usuarios) {
+         List<UsuarioDTO> dtos =
+                 usuarios.stream()
+                    .map(usuario -> UsuarioDTO.builder()
+                        .login(usuario.getLogin())
+                        .email(usuario.getEmail())
+                        .nome(usuario.getNome())
+                        .telefone(usuario.getTelefone())
+                        .build())
+                    .collect(Collectors.toList());
+         logger.info("Lista de Usuario DTO mapeado !");
+         return dtos;
     }
 }

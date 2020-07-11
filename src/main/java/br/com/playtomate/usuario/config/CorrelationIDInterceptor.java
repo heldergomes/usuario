@@ -1,6 +1,5 @@
 package br.com.playtomate.usuario.config;
 
-import com.sun.org.apache.regexp.internal.RE;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -27,8 +26,8 @@ public class CorrelationIDInterceptor extends HandlerInterceptorAdapter {
     }
 
     private String buscarCorrelationIdHeader(HttpServletRequest request){
-        correlationId = request.getHeader("correlation-id");
-        if (correlationId.isEmpty()) {
+        correlationId = request.getHeader("Correlation-id");
+        if (correlationId == null || correlationId.isEmpty()) {
             return UUID.randomUUID().toString();
         }
         return correlationId;
