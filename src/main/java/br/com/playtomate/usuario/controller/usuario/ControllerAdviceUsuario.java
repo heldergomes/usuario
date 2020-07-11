@@ -18,7 +18,7 @@ public class ControllerAdviceUsuario {
     @ExceptionHandler(UsuarioInexistenteException.class)
     @ResponseBody
     ErrorInfo usuarioInexistenteException(HttpServletRequest req, UsuarioInexistenteException ex){
-        return new ErrorInfo(req.getRequestURL(), HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.name() ,ex.getMessage());
+        return new ErrorInfo(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.name() ,ex.getMessage(), req.getRequestURL());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -26,11 +26,11 @@ public class ControllerAdviceUsuario {
     @ResponseBody
     ErrorInfo chaveDuplicadaException(HttpServletRequest req, ChaveDuplicadaException ex){
         if (ex.getMessage().contains("login")){
-            return new ErrorInfo(req.getRequestURL(), HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.name(), ex.getMessage(), "login");
+            return new ErrorInfo(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.name() ,ex.getMessage(), req.getRequestURL(), "login");
         }else if (ex.getMessage().contains("email")){
-            return new ErrorInfo(req.getRequestURL(), HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.name(), ex.getMessage(), "email");
+            return new ErrorInfo(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.name() ,ex.getMessage(), req.getRequestURL(), "email");
         }else{
-            return new ErrorInfo(req.getRequestURL(), HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.name(), ex.getMessage());
+            return new ErrorInfo(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.name() ,ex.getMessage(), req.getRequestURL());
         }
     }
 
@@ -38,6 +38,6 @@ public class ControllerAdviceUsuario {
     @ExceptionHandler(AutorizacaoException.class)
     @ResponseBody
     ErrorInfo chaveDuplicadaException(HttpServletRequest req, AutorizacaoException ex){
-        return new ErrorInfo(req.getRequestURL(), HttpStatus.FORBIDDEN.value(), HttpStatus.FORBIDDEN.name() ,ex.getMessage());
+        return new ErrorInfo(HttpStatus.FORBIDDEN.value(), HttpStatus.FORBIDDEN.name() ,ex.getMessage(), req.getRequestURL());
     }
 }
