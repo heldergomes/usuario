@@ -2,7 +2,7 @@
 API de orquestração de usuarios
 
 # Lições Aprendidas
-<b>Evitar utilizar injeção de dependencia na classe model do repository</b>
+<h3>Evitar utilizar injeção de dependencia na classe model do repository</h3>
 Quando definimos um atributo na entidade @document para usar alguma funcionalidade
 através de injeção de dependencia, acabamos tendo conflito na comunicação do repository
 com o banco de dados do mongoDB, pois o repository trata todos os atributos da classe 
@@ -15,8 +15,8 @@ public class Usuario {
     @Id
     private String id;
 
-    <strike>@Autowired</strike
-    <strike>private ServiceUsuario serviceUsuario;</strike>
+    ~~@Autowired~~
+    ~~private ServiceUsuario serviceUsuario;~~
 
 }
 ```
