@@ -1,6 +1,7 @@
 package br.com.playtomate.usuario.controller.usuario;
 
 import br.com.playtomate.usuario.database.ChaveDuplicadaException;
+import br.com.playtomate.usuario.database.ObjetoNaoEncontradoException;
 import br.com.playtomate.usuario.database.UsuarioInexistenteException;
 import br.com.playtomate.usuario.domain.usuario.AutorizacaoException;
 import org.springframework.http.HttpStatus;
@@ -39,5 +40,12 @@ public class ControllerAdviceUsuario {
     @ResponseBody
     ErrorInfo chaveDuplicadaException(HttpServletRequest req, AutorizacaoException ex){
         return new ErrorInfo(HttpStatus.FORBIDDEN.value(), HttpStatus.FORBIDDEN.name() ,ex.getMessage(), req.getRequestURL());
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ObjetoNaoEncontradoException.class)
+    @ResponseBody
+    ErrorInfo objetoNaoEncontradoException(HttpServletRequest req, ObjetoNaoEncontradoException ex){
+        return new ErrorInfo(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.name() ,ex.getMessage(), req.getRequestURL());
     }
 }

@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.management.openmbean.InvalidKeyException;
@@ -37,13 +38,13 @@ public class ServiceUsuario {
     }
 
     public Usuario buscarPorLogin(String login){
-        UsuarioModel model =  repository.findByLogin(login).orElseThrow(InvalidKeyException::new);
+        UsuarioModel model =  repository.findByLogin(login).orElseThrow(ObjetoNaoEncontradoException::new);
         logger.info("usuario encontrado com sucesso atraves do login!");
         return mapper.toUsuario(model);
     }
 
     public Usuario buscarPorId(String id) {
-        UsuarioModel model = repository.findById(id).orElseThrow(InvalidKeyException::new);
+        UsuarioModel model = repository.findById(id).orElseThrow(ObjetoNaoEncontradoException::new);
         logger.info("usuario encontrado com sucesso atraves do id!");
         return mapper.toUsuario(model);
     }
@@ -52,5 +53,14 @@ public class ServiceUsuario {
         List<UsuarioModel> models = repository.findAll();
         logger.info("busca de todos usuarios realizada com sucesso !");
         return mapper.toUsuario(models);
+    }
+
+    public Usuario buscarPorEmail(String email) {
+        UsuarioModel model =  repository.findByEmail(email).orElseThrow(ObjetoNaoEncontradoException::new);
+        return mapper.toUsuario(model);
+    }
+
+    public void atualizarUsuario(Usuario usuario) {
+        repository.save(mapper.toModel(usuario));
     }
 }

@@ -5,8 +5,8 @@ import br.com.playtomate.usuario.domain.security.Autenticador;
 import br.com.playtomate.usuario.domain.security.UsuarioSecurity;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Set;
@@ -20,6 +20,7 @@ public class Usuario {
     private String id;
     private String login;
     private String email;
+    @Setter
     private String senha;
     private String nome;
     private int telefone;
@@ -74,5 +75,13 @@ public class Usuario {
 
     public List<Usuario> buscarTodosUsuarios() {
         return serviceUsuario.buscarTodos();
+    }
+
+    public Usuario buscarUsuarioPorEmail(String email){
+        return serviceUsuario.buscarPorEmail(email);
+    }
+
+    public void atualizar() {
+        serviceUsuario.atualizarUsuario(this);
     }
 }
