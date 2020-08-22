@@ -1,6 +1,44 @@
 # USUARIO
 API de orquestração de usuarios
 
+# End Points
+> Rota
+
+- /login
+
+> Header Request
+
+| KEY            | VALUE            |
+|----------------|------------------|
+| Content-Type   | application/json |
+| correlation-id | UUID.Random()    |
+
+> Body Request
+
+| CAMPO          | EXEMPLO          |
+|----------------|------------------|
+| login          | tomate_123       |
+| senha          | ax824kh12        |
+
+> Header Response
+
+| KEY            | EXEMPLO          |
+|----------------|------------------|
+| Authorization  | Bearer eyJhbGciO |
+
+> Body Response
+
+| CAMPO          | EXEMPLO                              |
+|----------------|--------------------------------------|
+| id_usuario     | dab7fcb2-24fd-4733-b680-d0389ce23b19 |
+
+> Http Status Response
+
+| HTTP STATUS    | SIGNIFICADO                |
+|----------------|----------------------------|
+| 200            | Login Efetuado com sucesso |
+| 401            | Login ou Senha Invalido    |
+
 # Lições Aprendidas
 <h3>Evitar utilizar injeção de dependencia na classe model do repository</h3>
 Quando definimos um atributo na entidade @document para usar alguma funcionalidade através de injeção de dependencia, acabamos tendo conflito na comunicação do repositorycom o banco de dados do mongoDB, pois o repository trata todos os atributos da classe como um campo do documento.

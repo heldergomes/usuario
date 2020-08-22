@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:remove="all">Esqueci minha senha</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+        <div>
+            <h1>
+                Olá, <span th:text="${usuario.nome}"></span>
+            </h1><br/>
+            <p>
+                Sua nova senha foi gerada ! - Senha: <span th:text="${novaSenha.senha}"></span>
+            </p><br/>
+            <p>
+                Atualize sua senha gerada para uma nova no nosso sistema !!!
+            </p>
+        </div>
+    </body>
+</html>

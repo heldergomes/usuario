@@ -4,6 +4,7 @@ import br.com.playtomate.usuario.database.ChaveDuplicadaException;
 import br.com.playtomate.usuario.database.ObjetoNaoEncontradoException;
 import br.com.playtomate.usuario.database.UsuarioInexistenteException;
 import br.com.playtomate.usuario.domain.usuario.AutorizacaoException;
+import com.mongodb.MongoSocketException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -48,4 +49,5 @@ public class ControllerAdviceUsuario {
     ErrorInfo objetoNaoEncontradoException(HttpServletRequest req, ObjetoNaoEncontradoException ex){
         return new ErrorInfo(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.name() ,ex.getMessage(), req.getRequestURL());
     }
+
 }
