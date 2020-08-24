@@ -1,4 +1,5 @@
 package br.com.playtomate.usuario.controller.usuario;
+import br.com.playtomate.usuario.controller.security.JwtAuthenticationFilter;
 import br.com.playtomate.usuario.domain.usuario.Usuario;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
@@ -28,9 +28,8 @@ public class ControllerUsuario {
         String idPessoa = usuario.cadastroPessoa();
         logger.info("novo usuario cadastrado com sucesso !");
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(idPessoa).toUri();
-        return ResponseEntity.created(uri).body(idPessoa);
+        return ResponseEntity.created(uri).body("{\"id_usuario\": \"" + idPessoa + "\" }");
     }
-
 
     @RequestMapping(value = "/usuario/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<String> deletarUsuario(@PathVariable String id){

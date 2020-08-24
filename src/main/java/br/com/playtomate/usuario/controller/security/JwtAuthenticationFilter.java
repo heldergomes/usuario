@@ -3,6 +3,7 @@ package br.com.playtomate.usuario.controller.security;
 import br.com.playtomate.usuario.domain.security.JwtUtil;
 import br.com.playtomate.usuario.domain.security.UsuarioSecurity;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.json.JSONObject;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -53,9 +54,11 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String login = ((UsuarioSecurity) authResult.getPrincipal()).getUsername();
         String token = jwtUtil.generateToken(login);
         String id = ((UsuarioSecurity) authResult.getPrincipal()).getId();
-        response.addHeader("Authorization", "Bearer " + token);
+        response.setHeader("Authorization", "Bearer " + token);
         response.setContentType("application/json");
-        response.getWriter().append("{\"id_usuario\": \"" + id +"\"}");
+        response.getWriter()
+                .append("{\"" + "id_usuario\": \"" + id +"\", "
+                        + "\"token\": \"" + token +"\"" + "}");
     }
 
     private class JwtAuthenticationFailureHandler implements AuthenticationFailureHandler {
@@ -64,8 +67,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             HttpServletResponse response,
                                             AuthenticationException exception) throws IOException, ServletException {
             response.setStatus(401);
-            response.setContentType("application/json");
             response.getWriter().append(json());
+            response.setHeader("Content-Type", "application/json");
         }
 
         private String json(){
