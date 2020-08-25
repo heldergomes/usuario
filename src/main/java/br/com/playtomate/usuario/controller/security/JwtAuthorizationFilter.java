@@ -1,7 +1,6 @@
 package br.com.playtomate.usuario.controller.security;
 
 import br.com.playtomate.usuario.domain.security.JwtUtil;
-import br.com.playtomate.usuario.domain.security.UsuarioSecurity;
 import br.com.playtomate.usuario.domain.security.UsuarioServiceSecurity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
