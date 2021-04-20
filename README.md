@@ -7,7 +7,7 @@ API de orquestração de usuarios
 - /login
 - Descrição: Login do usuario
 
-> Metodo 
+> Metodo  
 
 
 - POST
